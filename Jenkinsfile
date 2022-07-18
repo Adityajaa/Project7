@@ -1,12 +1,23 @@
-node('master') 
-{
-    stage('ContinuousDownload_Master') 
-    {
-         git 'https://github.com/.....Devops.git'
-        
+pipeline {
+  agent any 
+  tools {
+    maven 'Maven'
+  }
+  stages {
+    stage ('Initialize') {
+      steps {
+        sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+            ''' 
+      }
     }
-     stage('ContinuousBuild_Master') 
-    {
-        sh 'mvn package'
-    }    
- }
+      
+    stage ('Build') {
+      steps {
+      sh 'mvn clean package'
+    }
+    }
+       
+   }  
+  }
